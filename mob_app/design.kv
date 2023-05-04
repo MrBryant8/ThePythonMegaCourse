@@ -1,0 +1,134 @@
+<LoginScreen>:
+    GridLayout:
+        cols:1
+        GridLayout:
+            cols:1
+            padding:15,15
+            spacing:20,20
+            Label:
+                text:"User Login"
+                font_size:'20sp'
+            TextInput:
+                id:username
+                hin_text:"Username"
+            TextInput:
+                id:password
+                password:True
+                hin_text:"Password"
+            RelativeLayout:
+                Button:
+                    text:"Login"
+                    on_press:root.login(root.ids.username.text,root.ids.password.text)
+                    hint_size:0.3,0.5
+                    pos_hint:{'center_x':0.5,'center_y':0.6}
+            Label:
+                id:wrong_login
+                text:""
+        GridLayout:
+            cols:2
+            size_hint:0.2,0.2
+            spacing:10,0
+            padding:10,10
+            Button:
+                text:"Forgotten password?"
+                on_press:root.f_pw_redirection()
+                background_color:1,1,1,0
+                opacity:1 if self.state=='normal' else 0.5
+                color:0.1,0.5,1,1
+
+            Button:
+                text:"Sign up"
+                on_press:root.sign_up()
+                background_color:1,1,1,0
+                opacity:1 if self.state=='normal' else 0.5
+                color:0.1,0.5,1,1
+
+<SignUpScreen>:
+    GridLayout:
+        cols:1
+        padding:30,30
+        spacing:20,30
+        Label:
+            text:"Sign up if u like dogs!"
+        TextInput:
+            id: username
+            hin_text:"Username"
+        TextInput:
+            id: password
+            hin_text:"Password"
+        RelativeLayout:
+            Button:
+                hint_size:0.3,0.5
+                pos_hint:{'center_x':0.5,'center_y':0.6}
+                text:"Sign up"
+                on_press:root.add_user(root.ids.username.text,root.ids.password.text)
+
+<SignUpScreenSuccess>:
+    GridLayout:
+        cols:1
+        padding:30,30
+        spacing:30,30
+        Label:
+            text:"Sign-Up successful"
+        Button:
+            text:"Log in,pal"
+            on_press:root.switch_to_login()
+
+<LoginScreenSuccess>:
+    GridLayout:
+        cols:1
+        RelativeLayout:
+            ImageButton:
+                source:'logout_hover.png' if self.hovered else 'logout_nothover.png'
+                on_press:root.log_out()  
+                size_hint:0.35,0.35
+                pos_hint:{'center_x':0.89,'center_y':0.7}
+        Label:
+            text:"How ya feel?"
+        TextInput:
+            id:feeling
+            hin_text:"Express ya feelings:sad,happy,unloved..."
+        Button:
+            text:"Enlighten me"  
+            on_press:root.get_quote(root.ids.feeling.text)
+        ScrollView:
+            Label:
+                id:quote
+                text:""
+                text_size: self.width,None
+                size_hint_y:None
+                height:self.texture_size[1]
+            
+<ForgottenPWScreen>:
+    GridLayout:
+        cols:1
+        GridLayout:
+            cols:1
+            Label:
+                text:"Enter your username"
+            TextInput:
+                id:username1
+                text:""
+            Label:
+                id:password1
+                text:""        
+        GridLayout:
+            cols:2           
+            Button:
+                text:"Search"
+                on_press:root.pw_recovery(root.ids.username1.text)
+            Button:
+                text:"Continue"
+                on_press:root.redirect(root.ids.username1.text)
+            
+<RootWidget>:
+    LoginScreen:
+        name:"login_screen"
+    SignUpScreen:
+        name:"sign_up_screen"
+    SignUpScreenSuccess:
+        name:"sign_up_screen_success"
+    LoginScreenSuccess:
+        name:"login_screen_success"
+    ForgottenPWScreen:
+        name:"forgot_my_password_screen"
